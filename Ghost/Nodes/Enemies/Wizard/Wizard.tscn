@@ -1,0 +1,46 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Assets/Enemies/Wizard/wizard_test.png" type="Texture" id=1]
+[ext_resource path="res://Nodes/Enemies/Wizard/Wizard.gd" type="Script" id=2]
+[ext_resource path="res://Nodes/Debug/HealthLabel.tscn" type="PackedScene" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 6, 11 )
+
+[node name="Wizard" type="Sprite" groups=[
+"Enemies",
+]]
+texture = ExtResource( 1 )
+offset = Vector2( 0, -11 )
+flip_h = true
+script = ExtResource( 2 )
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+position = Vector2( -3, -3 )
+scale = Vector2( 0.3, 0.15 )
+rect = Rect2( 0, 0, 20, 20 )
+
+[node name="TeleportTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="FlameTimer" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+
+[node name="Hurtbox" type="Area2D" parent="." groups=[
+"Enemies",
+]]
+collision_layer = 4
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2( 0, -11 )
+shape = SubResource( 1 )
+
+[node name="HealthLabel" parent="." instance=ExtResource( 3 )]
+margin_left = -19.0
+margin_top = -28.0
+margin_right = 21.0
+margin_bottom = -14.0
+[connection signal="timeout" from="TeleportTimer" to="." method="_on_TeleportTimer_timeout"]
+[connection signal="timeout" from="FlameTimer" to="." method="_on_FlameTimer_timeout"]

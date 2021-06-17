@@ -1,0 +1,58 @@
+[gd_scene load_steps=22 format=2]
+
+[ext_resource path="res://Assets/Enemies/Wizard/wizard_attack_test17.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Enemies/Wizard/wizard_attack_test12.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Enemies/Wizard/wizard_attack_test11.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Enemies/Wizard/wizard_attack_test8.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Enemies/Wizard/wizard_attack_test9.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Enemies/Wizard/wizard_attack_test1.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Enemies/Wizard/wizard_attack_test14.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Enemies/Wizard/wizard_attack_test4.png" type="Texture" id=8]
+[ext_resource path="res://Assets/Enemies/Wizard/wizard_attack_test5.png" type="Texture" id=9]
+[ext_resource path="res://Assets/Enemies/Wizard/wizard_attack_test3.png" type="Texture" id=10]
+[ext_resource path="res://Assets/Enemies/Wizard/wizard_attack_test16.png" type="Texture" id=11]
+[ext_resource path="res://Assets/Enemies/Wizard/wizard_attack_test15.png" type="Texture" id=12]
+[ext_resource path="res://Assets/Enemies/Wizard/wizard_attack_test10.png" type="Texture" id=13]
+[ext_resource path="res://Assets/Enemies/Wizard/wizard_attack_test2.png" type="Texture" id=14]
+[ext_resource path="res://Assets/Enemies/Wizard/wizard_attack_test6.png" type="Texture" id=15]
+[ext_resource path="res://Assets/Enemies/Wizard/wizard_attack_test13.png" type="Texture" id=16]
+[ext_resource path="res://Assets/Enemies/Wizard/wizard_attack_test7.png" type="Texture" id=17]
+[ext_resource path="res://Nodes/Enemies/Wizard/Attack/FlameCircle.gd" type="Script" id=18]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 6 ), ExtResource( 14 ), ExtResource( 10 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 15 ), ExtResource( 17 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 13 ), ExtResource( 3 ), ExtResource( 2 ), ExtResource( 16 ), ExtResource( 7 ), ExtResource( 12 ), ExtResource( 11 ), ExtResource( 1 ) ],
+"loop": true,
+"name": "default",
+"speed": 15.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 2, 2 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 2, 2 )
+
+[node name="FlameCircle" type="KinematicBody2D"]
+z_index = 2
+collision_layer = 16
+collision_mask = 0
+script = ExtResource( 18 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -12, -11 )
+shape = SubResource( 2 )
+disabled = true
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 10
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2( -12, -11 )
+shape = SubResource( 3 )
+[connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_FlameCircle_animation_finished"]
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
